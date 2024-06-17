@@ -9,7 +9,7 @@ public class Calculator {
     Scanner sc = new Scanner(System.in);
     System.out.println("Введите выражение: ");
     String ex = sc.nextLine();
-    System.out.println("Результат: ");
+    //System.out.println("Результат: ");
     try {
 	if (isRoman(ex)) {
 	  System.out.println(calcRom(ex));
@@ -17,7 +17,7 @@ public class Calculator {
 	  System.out.println(calcArab(ex));
 	}
     } catch (Exception еx) {
-	System.out.println("Ошибка");
+	System.out.println("Ошибка: " + e.getMessage());
     }
   }
 
@@ -62,13 +62,13 @@ public class Calculator {
     String[] sign = expression.split("(?<=[-+*/])|(?=[-+*/])");
     int result = Integer.parseInt(sign[0]);
     if (result < 1 || result > 10) {
-	throw new Exception();
+	throw new Exception("Числа должны быть от 1 до 10 включительно");
     }
     for (int i = 1; i < sign.length; i += 2) {
 	String operator = sign[i];
 	int operand = Integer.parseInt(sign[i + 1]);
 	if (operand < 1 || operand > 10) {
-	  throw new Exception();
+	  throw new Exception("Числа должны быть от 1 до 10 включительно");
 	}
 	switch (operator) {
 	  case "+":
@@ -84,7 +84,7 @@ public class Calculator {
 	    result /= operand;
 	    break;
 	  default:
-	    throw new Exception();
+	    throw new Exception("Не допустимый оператор");
 	}
     }
     return result;
@@ -94,13 +94,13 @@ public class Calculator {
     String[] signs = expression.split("(?<=[-+*/])|(?=[-+*/])");
     int c = romanToInteger(signs[0]);
     if (c < 1 || c > 10) {
-	throw new Exception();
+	throw new Exception("Числа должны быть от I до X включительно");
     }
     for (int i = 1; i < signs.length; i += 2) {
 	String operator = signs[i];
 	int operand = romanToInteger(signs[i + 1]);
 	if (operand < 1 || operand > 10) {
-	  throw new Exception();
+	  throw new Exception("Числа должны быть от I до X включительно");
 	}
 	switch (operator) {
 	  case "+":
@@ -116,7 +116,7 @@ public class Calculator {
 	    c /= operand;
 	    break;
 	  default:
-	    throw new Exception();
+	    throw new Exception("Не допустимый оператор");
 	}
     }
     return integerToRoman(c);
