@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class Calculator {
   private static final Map<Character, Integer> toArabMap = new HashMap<>();
-  private static final Map<Integer, String> toRomanMap = new HashMap<>();
 
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
