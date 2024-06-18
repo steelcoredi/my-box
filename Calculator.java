@@ -99,7 +99,7 @@ public class Calculator {
     for (int i = 1; i < signs.length; i += 2) {
 	String operator = signs[i];
 	int operand = romanToInteger(signs[i + 1]);
-	if (operand < 1 || operand > 10) { // если
+	if (operand < 1 || operand > 10) {
 	  throw new Exception("Числа должны быть от I до X включительно");
 	}
 	switch (operator) {
