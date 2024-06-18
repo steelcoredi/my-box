@@ -9,15 +9,15 @@ public class Calculator {
     Scanner sc = new Scanner(System.in);
     System.out.println("Введите выражение: ");
     String ex = sc.nextLine();
-    //System.out.println("Результат: ");
     try {
+	System.out.println("Результат: ");
 	if (isRoman(ex)) {
 	  System.out.println(calcRom(ex));
 	} else {
 	  System.out.println(calcArab(ex));
 	}
-    } catch (Exception еx) {
-	System.out.println("Ошибка: " + e.getMessage());
+    } catch (Exception exception) {
+	System.out.println("Ошибка: " + exception.getMessage());
     }
   }
 
@@ -29,15 +29,15 @@ public class Calculator {
 
   private static boolean isRoman(String ex) {
     return ex.matches("[IVX+\\-*/]+");
-  }
+  }    // возвращиет в 15стр, мачес это совпадает
 
   private static int romanToInteger(String roman) {
-    int result = 0;
+    int result = 0; //
     int prevValue = 0;
-    for (char c : roman.toCharArray()) {
-	int value = toArabMap.get(c);
+    for (char c : roman.toCharArray()) { //
+	int value = toArabMap.get(c); // метод мап ключем значения с
 	if (value > prevValue) {
-	  result += value - 2 * prevValue;
+	  result += value - 2 * prevValue; // к чатботу
 	  result += value;
 	}
 	prevValue = value;
@@ -46,7 +46,7 @@ public class Calculator {
   }
 
   private static String integerToRoman(int num) {
-    StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder(); // созд массив из симв и прилепляется символы
     int[] arr = {10, 9, 5, 4, 1};
     String[] symbols = {"X", "IX", "V", "IV", "I"};
     for (int i = 0; i < arr.length && num >= 0; i++) {
@@ -90,21 +90,21 @@ public class Calculator {
     return result;
   }
 
-  private static String calcRom(String expression) throws Exception {
-    String[] signs = expression.split("(?<=[-+*/])|(?=[-+*/])");
-    int c = romanToInteger(signs[0]);
+  private static String calcRom(String expression) throws Exception { // выбрасывает исключение
+    String[] signs = expression.split("(?<=[-+*/])|(?=[-+*/])"); // разделяем
+    int c = romanToInteger(signs[0]); // к 33
     if (c < 1 || c > 10) {
-	throw new Exception("Числа должны быть от I до X включительно");
+	throw new Exception("Числа должны быть от I до X включительно"); //
     }
-    for (int i = 1; i < signs.length; i += 2) {
+    for (int i = 1; i < signs.length; i += 2) { // что то связаное с римкими цифрами, их расположение и тп заморочки , +=чтобы перепрыгивал через оператор
 	String operator = signs[i];
 	int operand = romanToInteger(signs[i + 1]);
-	if (operand < 1 || operand > 10) {
-	  throw new Exception("Числа должны быть от I до X включительно");
+	if (operand < 1 || operand > 10) { // если
+	  throw new Exception("Числа должны быть от I до X включительно"); // текст сообщения об ошибке
 	}
 	switch (operator) {
 	  case "+":
-	    c += operand;
+	    c += operand; // если то то это
 	    break;
 	  case "-":
 	    c -= operand;
@@ -116,7 +116,7 @@ public class Calculator {
 	    c /= operand;
 	    break;
 	  default:
-	    throw new Exception("Не допустимый оператор");
+	    throw new Exception("Не допустимый оператор"); // снова текст
 	}
     }
     return integerToRoman(c);
