@@ -94,7 +94,7 @@ public class Calculator {
     String[] signs = expression.split("(?<=[-+*/])|(?=[-+*/])");
     int c = romanToInteger(signs[0]); // к 33
     if (c < 1 || c > 10) {
-	throw new Exception("Числа должны быть от I до X включительно"); //
+	throw new Exception("Числа должны быть от I до X включительно");
     }
     for (int i = 1; i < signs.length; i += 2) {
 	String operator = signs[i];
