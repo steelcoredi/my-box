@@ -2,24 +2,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Calculator {
-  private static final Map<Character, Integer> toArabMap = new HashMap<>();
-
-  public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    System.out.println("Введите выражение: ");
-    String ex = sc.nextLine();
-    try {
-	System.out.println("Результат: ");
-	if (isRoman(ex)) {
-	  System.out.println(calcRom(ex));
-	} else {
-	  System.out.println(calcArab(ex));
-	}
-    } catch (Exception exception) {
-	System.out.println("Ошибка: " + exception.getMessage());
-    }
-  }
+public class Main {
+  static final Map<Character, Integer> toArabMap = new HashMap<>();
 
   static {
     toArabMap.put('I', 1);
@@ -27,17 +11,38 @@ public class Calculator {
     toArabMap.put('X', 10);
   }
 
-  private static boolean isRoman(String ex) {
+  static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Введите выражение: ");
+    String ex = sc.nextLine();
+    try {
+	System.out.println("Результат: ");
+	System.out.println(calc(ex));
+    } catch (Exception exception) {
+	System.out.println("Ошибка: " + exception.getMessage());
+    }
+  }
+
+  static String calc(String input) throws Exception {
+    if (isRoman(input)) {
+	return calcRom(input);
+    } else {
+	return String.valueOf(calcArab(input));
+    }
+  }
+
+  static boolean isRoman(String ex) {
     return ex.matches("[IVX+\\-*/]+");
   }
 
-  private static int romanToInteger(String roman) {
-    int result = 0; //
+  static int romanToInteger(String roman) {
+    int result = 0;
     int prevValue = 0;
-    for (char c : roman.toCharArray()) {
-	int value = toArabMap.get(c);
-	if (value > prevValue) {
-	  result += value - 2 * prevValue;
+    for (int i = roman.length() - 1; i >= 0; i--) {
+	int value = toArabMap.get(roman.charAt(i));
+	if (value < prevValue) {
+	  result -= value;
+	} else {
 	  result += value;
 	}
 	prevValue = value;
@@ -45,20 +50,20 @@ public class Calculator {
     return result;
   }
 
-  private static String integerToRoman(int num) {
+  static String integerToRoman(int num) {
     StringBuilder sb = new StringBuilder();
     int[] arr = {10, 9, 5, 4, 1};
     String[] symbols = {"X", "IX", "V", "IV", "I"};
-    for (int i = 0; i < arr.length && num >= 0; i++) {
+    for (int i = 0; i < arr.length; i++) {
 	while (num >= arr[i]) {
-	  num -= arr[i];
 	  sb.append(symbols[i]);
+	  num -= arr[i];
 	}
     }
     return sb.toString();
   }
 
-  private static int calcArab(String expression) throws Exception {
+  static int calcArab(String expression) throws Exception {
     String[] sign = expression.split("(?<=[-+*/])|(?=[-+*/])");
     int result = Integer.parseInt(sign[0]);
     if (result < 1 || result > 10) {
@@ -90,9 +95,9 @@ public class Calculator {
     return result;
   }
 
-  private static String calcRom(String expression) throws Exception {
+  static String calcRom(String expression) throws Exception {
     String[] signs = expression.split("(?<=[-+*/])|(?=[-+*/])");
-    int c = romanToInteger(signs[0]); // к 33
+    int c = romanToInteger(signs[0]);
     if (c < 1 || c > 10) {
 	throw new Exception("Числа должны быть от I до X включительно");
     }
@@ -118,6 +123,9 @@ public class Calculator {
 	  default:
 	    throw new Exception("Не допустимый оператор");
 	}
+    }
+    if (c == 0) {
+	throw new Exception("Римское число не может быть равно 0");
     }
     return integerToRoman(c);
   }
