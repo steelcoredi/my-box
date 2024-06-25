@@ -5,13 +5,7 @@ import java.util.Scanner;
 public class Main {
   static final Map<Character, Integer> toArabMap = new HashMap<>();
 
-  static {
-    toArabMap.put('I', 1);
-    toArabMap.put('V', 5);
-    toArabMap.put('X', 10);
-  }
-
-  static void main(String[] args) {
+  public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     System.out.println("Введите выражение: ");
     String ex = sc.nextLine();
@@ -22,7 +16,11 @@ public class Main {
 	System.out.println("Ошибка: " + exception.getMessage());
     }
   }
-
+ static {
+    toArabMap.put('I', 1);
+    toArabMap.put('V', 5);
+    toArabMap.put('X', 10);
+  }
   static String calc(String input) throws Exception {
     if (isRoman(input)) {
 	return calcRom(input);
